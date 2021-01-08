@@ -8,7 +8,7 @@
 2. Calculate melt viscosity using the VFT model of Hess and Dingwell (1996):
 
 
-ln(\eta)=\left[a_1+a_2~ln(water)\right]+\frac{\left[b_1+b_2~ln(water)\right]}{T-\left[c_1+c_2~ln(water)\right]}
+<a href="https://www.codecogs.com/eqnedit.php?latex=ln(\eta)=\left[a_1&plus;a_2~ln(water)\right]&plus;\frac{\left[b_1&plus;b_2~ln(water)\right]}{T-\left[c_1&plus;c_2~ln(water)\right]}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?ln(\eta)=\left[a_1&plus;a_2~ln(water)\right]&plus;\frac{\left[b_1&plus;b_2~ln(water)\right]}{T-\left[c_1&plus;c_2~ln(water)\right]}" title="ln(\eta)=\left[a_1+a_2~ln(water)\right]+\frac{\left[b_1+b_2~ln(water)\right]}{T-\left[c_1+c_2~ln(water)\right]}" /></a>
 
 
 3. Approximate settling velocity using Stoke's equation:
