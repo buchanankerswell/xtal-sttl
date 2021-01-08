@@ -7,8 +7,8 @@
 
 2. Calculate melt viscosity using the VFT model of Hess and Dingwell (1996):
 
-$$ln( \nu ) = \left[ a_1 + a_2 ln(water) \right] + \frac{ \left[ b_1 + b2 ln(water) \right] }{ T - \left[ c_1 + c_2 ln(water) \right] }$$
+$$ ln( \nu ) = \left[ a_1 + a_2 ln(water) \right] + \frac{ \left[ b_1 + b2 ln(water) \right] }{ T - \left[ c_1 + c_2 ln(water) \right] } $$
 
 3. Approximate settling velocity using Stoke's equation:
 
-$$v = frac{ 2 g radius_{xtal}^2 \left( \rho_{xtal} - \rho_{liq} \right) }{ 9 \nu_{liq} }$$
+$$ v = frac{ 2 g radius_{xtal}^2 \left( \rho_{xtal} - \rho_{liq} \right) }{ 9 \nu_{liq} } $$
