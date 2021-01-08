@@ -9,6 +9,8 @@
 
 3. Approximate settling velocity using Stokes' equation
 
+## Running the App
+
 The app can be run locally by cloning this repository `git clone https://github.com/buchanankerswell/xtal-sttl` and running `app.R`.
 
 Alternatively, the app can be [run from a web browser](https://kerswell.shinyapps.io/xtal-sttl).
