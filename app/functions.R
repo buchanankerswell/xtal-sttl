@@ -3,7 +3,6 @@ library(shiny)
 library(shinydashboard)
 library(rhandsontable)
 library(patchwork)
-library(shinycssloaders)
 library(tidyverse)
 
 # Body of app (Layout + UI)
@@ -43,7 +42,7 @@ body <-
                   title = 'Visualization',
                   status = 'primary',
                   solidHeader = TRUE,
-                  plotOutput(outputId = 'p1') %>% withSpinner(color='black')),
+                  plotOutput(outputId = 'p1')),
                 # Results Box
                 box(width = 5,
                     title = 'Density Results',

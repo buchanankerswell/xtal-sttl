@@ -1,13 +1,13 @@
 # xtal-sttl
 
 ## Introduction
-`xtal-sttl` is an open source web-based app for calculating the settling velocity of spherical crystals in a silicate melt. This involves three calculations:
+`xtal-sttl` is an open source web-based app for calculating the settling velocity of spherical crystals in a silicate melts. This involves three calculations:
 
 1. Calculate melt density using a ten-component system: SiO2-TiO2-Al2O3-Fe2O3-FeO-MgO-CaO-Na2O-K2O-H2O (code translated from python script of Iacovino and Till, 2019)
 
-2. Calculate melt viscosity using the VFT model of Hess and Dingwell (1996):
+2. Calculate melt viscosity using the VFT model of Hess and Dingwell (1996)
 
-3. Approximate settling velocity using Stoke's equation
+3. Approximate settling velocity using Stokes' equation
 
 ## Calculating Fluid Densities
 
@@ -15,7 +15,7 @@ The program uses a spreadsheet interface to input fluid compositions, including 
 
 Note: *The program works best with < 50 compositions, otherwise the visualizations become unreadable.*
 
-Click the calculate button.
+Click the `calculate` button.
 
 ![](assets/images/demo-calc-density.gif)
 
@@ -27,12 +27,18 @@ The results are displayed in the results table and a series of plots are used to
 
 Calculating viscosities is as easy as switching to the `Magma Viscosity` tab and clicking `Calculate Viscosity`. The results are displayed in a table and visualized using a few different plots.
 
-Note: *Toggle samples on/off and adjust the temperature range from the `Magma Density` tab. Liquid-xtal mush viscosities are estimated using the `Crystal Fraction` input.*
+Note: *Toggle samples on/off and adjust the temperature range from the `Magma Density` tab. Liquid-xtal mush viscosities are estimated using the `Crystal Fraction` input, but only the melt viscosity is considered in Stokes' equation.*
 
 ![](assets/images/demo-calc-viscosity.gif)
 
 ## Calculating Stokes Velocity
 
-Switch to the `Stokes Velocity` tab and click calculate. The results and visualizations with automatically generate.
+Switch to the `Stokes Velocity` tab and click `Calculate Velocity`. The results and visualizations with automatically generate.
 
 ![](assets/images/demo-calc-velocity.gif)
+
+## Saving Plots
+
+Plots can be saved from the `Options` tab as `.pdf`s.
+
+![](assets/images/demo-save-plots.gif)
