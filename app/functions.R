@@ -19,7 +19,7 @@ body <-
                     status = 'primary',
                     solidHeader = TRUE,
                     # Data table
-                    rHandsontableOutput(outputId = 'table', height = '385px'),
+                    rHandsontableOutput(outputId = 'table', height = '315px'),
                     # Toggle box
                     checkboxInput('toggle', 'Toggle All', value = FALSE)),
                 # UI Box
@@ -27,14 +27,12 @@ body <-
                     title = 'Parameters',
                     status = 'primary',
                     solidHeader = TRUE,
-                    'Temperature-Pressure Range',
-                    br(),
-                    numericInput('Tlow1', 'Low T (Celcius)', value = 800, min = 0, max = 2000, step = 25),
-                    numericInput('Thigh1', 'High T (Celcius)', value = 1500, min = 0, max = 2000, step = 25),
-                    numericInput('Plow1', 'Low P (bar)', value = 1000, min = 0, max = 20000, step = 100),
-                    numericInput('Phigh1', 'High P (bar)', value = 10000, min = 0, max = 20000, step = 100),
+                    numericInput('Tlow1', 'T Range (Celcius)', value = 800, min = 0, max = 2000, step = 25),
+                    numericInput('Thigh1', NULL, value = 1500, min = 0, max = 2000, step = 25),
+                    numericInput('Plow1', 'P Range (bar)', value = 1000, min = 0, max = 20000, step = 100),
+                    numericInput('Phigh1', NULL, value = 10000, min = 0, max = 20000, step = 100),
                     # Select plot
-                    selectInput('type1', label = 'Plot Type', choices = c('Summary', 'Summary Density', 'Density T', 'Density P'), selected = 'Density T'),
+                    selectInput('type1', label = 'Plot Type', choices = c('Summary', 'Summary Density', 'Density T', 'Density P'), selected = 'Summary'),
                     # Calculate density button
                     actionButton('calc1', 'Calculate Density')),
                 # Plot Box
@@ -54,8 +52,15 @@ body <-
       tabItem('viscosity',
               # Row
               fluidRow(
+                # Results Box
+                box(width = 6,
+                  title = 'Density Results',
+                  status = 'primary',
+                  solidHeader = TRUE,
+                  # Results Table
+                  rHandsontableOutput(outputId = 'table3', height = '400px')),
                 # Plot box
-                box(width = 10,
+                box(width = 6,
                     title = 'Visualization',
                     status = 'primary',
                     solidHeader = TRUE,
@@ -72,19 +77,12 @@ body <-
                     # Calculate viscosity button
                     actionButton('calc2', 'Calculate Viscosity')),
                 # Results Box
-                box(
-                  title = 'Density Results',
-                  status = 'primary',
-                  solidHeader = TRUE,
-                  # Results Table
-                  rHandsontableOutput(outputId = 'table3', height = '400px')),
-                # Results Box
-                box(
+                box(width = 10,
                   title = 'Viscosity Results',
                   status = 'primary',
                   solidHeader = TRUE,
                   # Results Table
-                  rHandsontableOutput(outputId = 'table4', height = '400px')))),
+                  rHandsontableOutput(outputId = 'table4', height = '360px')))),
       # Stokes velocity tab layout
       tabItem('stokes',
               # Row
@@ -101,7 +99,7 @@ body <-
                   status = 'primary',
                   solidHeader = TRUE,
                   # Results Table
-                  rHandsontableOutput(outputId = 'table5', height = '400px')),
+                  rHandsontableOutput(outputId = 'table5', height = '360px')),
                 # UI box
                 box(width = 2,
                     title = 'Parameters',
@@ -119,14 +117,33 @@ body <-
               # Row
               fluidRow(
                 # First box (download configurations)
-                box(title = 'Configure Download',
+                box(width = 2,
+                    title = 'Configure Download',
                     status = 'primary',
                     solidHeader = TRUE,
                     selectInput('p.select', 'Select Plot', choices = c('Magma Density', 'Magma Viscosity', 'Stokes Velocity')),
                     textInput('filename', 'Filename (no extension)'),
                     numericInput('pdf_width', 'Plot width (inches)', min = 5.5, max = 17, step = 0.25, value = 5.5),
                     numericInput('pdf_height', 'Plot height (inches)', min = 4.25, max = 11, step = 0.25, value = 4.25),
-                    downloadButton('dlplot', 'Get Plot')))),
+                    downloadButton('dlplot', 'Get Plot')),
+                # Plot box
+                box(width = 10,
+                    title = 'Stokes Velocity',
+                    status = 'primary',
+                    solidHeader = TRUE,
+                    plotOutput(outputId = 'p6', height = '340px')),
+                # Plot box
+                box(
+                    title = 'Magma Viscosity',
+                    status = 'primary',
+                    solidHeader = TRUE,
+                    plotOutput(outputId = 'p5')),
+                # Plot box
+                box(
+                    title = 'Magma Density',
+                    status = 'primary',
+                    solidHeader = TRUE,
+                    plotOutput(outputId = 'p4')))),
     # Final tab layout
     tabItem('ack',
             # Row

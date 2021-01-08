@@ -36,33 +36,33 @@ server <- function(input, output, session) {
     vals <- reactiveValues()
     # Locations of peak positions (output from isoplotR function 'peakfit')
     vals$dens <- NULL
-    vals$data <- tibble(ID = rep(NA_character_, 15),
-                        SiO2 = rep(NA_real_, 15),
-                        TiO2 = rep(NA_real_, 15),
-                        Al2O3 = rep(NA_real_, 15),
-                        Fe2O3 = rep(NA_real_, 15),
-                        FeO = rep(NA_real_, 15),
-                        MgO = rep(NA_real_, 15),
-                        CaO = rep(NA_real_, 15),
-                        Na2O = rep(NA_real_, 15),
-                        K2O = rep(NA_real_, 15),
-                        H2O = rep(NA_real_, 15))
-    vals$dens <- tibble(ID = rep(NA_character_, 15),
-                        SiO2 = rep(NA_real_, 15),
-                        H2O = rep(NA_real_, 15),
-                        T = rep(NA_real_, 15),
-                        P = rep(NA_real_, 15),
-                        rho.melt = rep(NA_real_, 15),
-                        sig.rho = rep(NA_real_, 15))
-    vals$log.n <- tibble(ID = rep(NA_character_, 15),
-                         SiO2 = rep(NA_real_, 15),
-                         H2O = rep(NA_real_, 15),
-                         T = rep(NA_real_, 15),
-                         P = rep(NA_real_, 15),
-                         rho.melt = rep(NA_real_, 15),
-                         sig.rho = rep(NA_real_, 15),
-                         n.melt = rep(NA_real_, 15),
-                         n.mush = rep(NA_real_, 15))
+    vals$data <- tibble(ID = rep(NA_character_, 12),
+                        SiO2 = rep(NA_real_, 12),
+                        TiO2 = rep(NA_real_, 12),
+                        Al2O3 = rep(NA_real_, 12),
+                        Fe2O3 = rep(NA_real_, 12),
+                        FeO = rep(NA_real_, 12),
+                        MgO = rep(NA_real_, 12),
+                        CaO = rep(NA_real_, 12),
+                        Na2O = rep(NA_real_, 12),
+                        K2O = rep(NA_real_, 12),
+                        H2O = rep(NA_real_, 12))
+    vals$dens <- tibble(ID = rep(NA_character_, 16),
+                        SiO2 = rep(NA_real_, 16),
+                        H2O = rep(NA_real_, 16),
+                        T = rep(NA_real_, 16),
+                        P = rep(NA_real_, 16),
+                        rho.melt = rep(NA_real_, 16),
+                        sig.rho = rep(NA_real_, 16))
+    vals$log.n <- tibble(ID = rep(NA_character_, 14),
+                         SiO2 = rep(NA_real_, 14),
+                         H2O = rep(NA_real_, 14),
+                         T = rep(NA_real_, 14),
+                         P = rep(NA_real_, 14),
+                         rho.melt = rep(NA_real_, 14),
+                         sig.rho = rep(NA_real_, 14),
+                         n.melt = rep(NA_real_, 14),
+                         n.mush = rep(NA_real_, 14))
     vals$v.stokes <- tibble(ID = rep(NA_character_, 15),
                             SiO2 = rep(NA_real_, 15),
                             H2O = rep(NA_real_, 15),
@@ -243,6 +243,22 @@ server <- function(input, output, session) {
     })
     # Render plot
     output$p3 <- renderPlot({
+        p <- p3 %>% debounce(200)
+        p()
+    })
+    # Options_________________________________________________________________________
+    # Render plot
+    output$p4 <- renderPlot({
+        p <- p1 %>% debounce(200)
+        p()
+    })
+    # Render plot
+    output$p5 <- renderPlot({
+        p <- p2 %>% debounce(200)
+        p()
+    })
+    # Render plot
+    output$p6 <- renderPlot({
         p <- p3 %>% debounce(200)
         p()
     })
