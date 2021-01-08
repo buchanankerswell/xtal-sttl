@@ -28,3 +28,9 @@ The results are displayed in the results table and a series of plots are used to
 ![](assets/images/demo-plots-density.gif)
 
 ## Calculating Fluid Viscosities
+
+Calculating viscosities is as easy as switching to the `Magma Viscosity` tab and clicking `Calculate Viscosity`
+
+Note: *The calculations depend on the temperature range given in the `Magma Density` tab. Viscosity of a liquid-xtal mush is estimated using the `Crystal Fraction` input.*
+
+![](assets/images/demo-calc-viscosity.gif)
