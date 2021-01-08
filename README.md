@@ -9,6 +9,19 @@
 
 3. Approximate settling velocity using Stoke's equation
 
-The program uses a spreadsheet interface to input fluid compositions, including water content.
+## Calculating Fluid Densities
 
-![](assets/images/demo-table.png)
+### Input Fluid compositions
+
+The program uses a spreadsheet interface to input fluid compositions, including water content. Just copy and paste data from another spreadsheet or `.tsv`. Toggle measurements on/off by clicking the `toggle all` button, or selecting the toggle cells and hitting `return`.
+
+Note: **The program works best with < 50 compositions, otherwise the visualizations become unreadable.**
+
+![](assets/images/demo-table.gif)
+
+### Calculate
+
+Click the calculate button. The results are displayed in the results table and a series of plots are used to visualize the output.
+
+
+## Calculating Fluid Viscosities
