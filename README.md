@@ -11,13 +11,9 @@
 
 ## Calculating Fluid Densities
 
-### Input Fluid compositions
-
 The program uses a spreadsheet interface to input fluid compositions, including water content. Just copy and paste data from another spreadsheet or `.tsv`. Toggle measurements on/off by clicking the `toggle all` button, or selecting the toggle cells and hitting `return`.
 
 Note: *The program works best with < 50 compositions, otherwise the visualizations become unreadable.*
-
-![](assets/images/demo-table.gif)
 
 Click the calculate button.
 
@@ -29,8 +25,14 @@ The results are displayed in the results table and a series of plots are used to
 
 ## Calculating Fluid Viscosities
 
-Calculating viscosities is as easy as switching to the `Magma Viscosity` tab and clicking `Calculate Viscosity`
+Calculating viscosities is as easy as switching to the `Magma Viscosity` tab and clicking `Calculate Viscosity`. The results are displayed in a table and visualized using a few different plots.
 
-Note: *The calculations depend on the temperature range given in the `Magma Density` tab. Viscosity of a liquid-xtal mush is estimated using the `Crystal Fraction` input.*
+Note: *Toggle samples on/off and adjust the temperature range from the `Magma Density` tab. Liquid-xtal mush viscosities are estimated using the `Crystal Fraction` input.*
 
 ![](assets/images/demo-calc-viscosity.gif)
+
+## Calculating Stokes Velocity
+
+Switch to the `Stokes Velocity` tab and click calculate. The results and visualizations with automatically generate.
+
+![](assets/images/demo-calc-velocity.gif)

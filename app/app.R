@@ -146,7 +146,7 @@ server <- function(input, output, session) {
             } else if(input$type1 == 'Summary Density'){
                 req(!is.null(vals$dens))
                 p1 <- vals$dens %>% filter(ID %in% vals$data$ID[vals$data$toggle == TRUE]) %>% ggplot() + geom_histogram(aes(x = rho.melt)) + labs(x = 'Liquid Density (g/cc)', y = NULL) + theme_classic(base_size = 14)
-                p2 <- vals$dens %>% filter(ID %in% vals$data$ID[vals$data$toggle == TRUE]) %>% ggplot() + geom_boxplot(aes(x = SiO2, y = rho.melt, group = ID), width = 0.5) + labs(x = 'SiO2 (wt%)', y = 'Liquid Density (g/cc)') + theme_classic(base_size = 14)
+                p2 <- vals$dens %>% filter(ID %in% vals$data$ID[vals$data$toggle == TRUE]) %>% ggplot() + geom_boxplot(aes(x = SiO2, y = rho.melt, group = ID, fill = H2O), width = 0.5) + labs(x = 'SiO2 (wt%)', y = 'Liquid Density (g/cc)', fill = 'H2O wt%') + theme_classic(base_size = 14)
                 p <- p1 + p2
             } else if(input$type1 == 'Density P' && !is.null(vals$dens)){
                 req(!is.null(vals$dens))
@@ -201,13 +201,13 @@ server <- function(input, output, session) {
     # Viscosity plots
     p2 <- reactive({
         if(input$type2 == 'Summary'){
-            p1 <- vals$log.n %>% filter(ID %in% vals$data$ID[vals$data$toggle == TRUE]) %>% ggplot() + geom_histogram(aes(x = n.melt)) + labs(x = 'Melt Viscosity (Pa s)', y = NULL) + theme_classic(base_size = 14)
-            p2 <- vals$log.n %>% filter(ID %in% vals$data$ID[vals$data$toggle == TRUE]) %>% ggplot() + geom_histogram(aes(x = n.mush)) + labs(x = 'Mush Viscosity (Pa s)', y = NULL) + theme_classic(base_size = 14)
+            p1 <- vals$log.n %>% filter(ID %in% vals$data$ID[vals$data$toggle == TRUE]) %>% ggplot() + geom_histogram(aes(x = n.melt)) + labs(x = 'Log Viscosity Melt (Pa s)', y = NULL) + theme_classic(base_size = 14)
+            p2 <- vals$log.n %>% filter(ID %in% vals$data$ID[vals$data$toggle == TRUE]) %>% ggplot() + geom_histogram(aes(x = n.mush)) + labs(x = 'Log Viscosity Mush (Pa s)', y = NULL) + theme_classic(base_size = 14)
             p <- p1 + p2
         } else if(input$type2 == 'Viscosity T'){
-            p <- vals$log.n %>% filter(ID %in% vals$data$ID[vals$data$toggle == TRUE]) %>% ggplot() + geom_point(aes(x = T, y = n.melt), alpha = 0.2) + geom_line(aes(x = T, y = n.melt, color = H2O, group = H2O), size = 0.8) + labs(x = 'T (Celcius)', y = 'Melt Viscosity (Pa s)', color = 'H2O wt%') + scale_color_viridis_c(option = 'D') + theme_classic(base_size = 14)
+            p <- vals$log.n %>% filter(ID %in% vals$data$ID[vals$data$toggle == TRUE]) %>% ggplot() + geom_point(aes(x = T, y = n.melt), alpha = 0.2) + geom_line(aes(x = T, y = n.melt, color = H2O, group = H2O), size = 0.8) + labs(x = 'T (Celcius)', y = 'Log Viscosity Melt (Pa s)', color = 'H2O wt%') + scale_color_viridis_c(option = 'D') + theme_classic(base_size = 14)
         } else if(input$type2 == 'Viscosity H2O'){
-            p <- vals$log.n %>% filter(ID %in% vals$data$ID[vals$data$toggle == TRUE]) %>% ggplot() + geom_point(aes(x = H2O, y = n.melt), alpha = 0.2) + geom_line(aes(x = H2O, y = n.melt, color = T, group = T), size = 0.8) + labs(x = 'H2O (wt%)', y = 'Melt Viscosity (Pa s)', color = 'Celcius') + scale_color_viridis_c(option = 'D') + theme_classic(base_size = 14)
+            p <- vals$log.n %>% filter(ID %in% vals$data$ID[vals$data$toggle == TRUE]) %>% ggplot() + geom_point(aes(x = H2O, y = n.melt), alpha = 0.2) + geom_line(aes(x = H2O, y = n.melt, color = T, group = T), size = 0.8) + labs(x = 'H2O (wt%)', y = 'Log Viscosity Melt (Pa s)', color = 'Celcius') + scale_color_viridis_c(option = 'D') + theme_classic(base_size = 14)
         }
         return(p)
     })
@@ -235,9 +235,9 @@ server <- function(input, output, session) {
     })
     # Stokes plots
     p3 <- reactive({
-        p1 <- vals$v.stokes %>% filter(ID %in% vals$data$ID[vals$data$toggle == TRUE]) %>% ggplot() + geom_raster(aes(x = T, y = P, fill = vel)) + labs(x = 'T (Celcius)', y = 'Pressure (kbar)', fill = 'cm/yr') + scale_y_reverse() + scale_fill_viridis_c(option = 'D') + theme_classic(base_size = 14)
-        p2 <- vals$v.stokes %>% filter(ID %in% vals$data$ID[vals$data$toggle == TRUE]) %>% ggplot() + geom_point(aes(x = T, y = vel), alpha = 0.2) + geom_line(aes(x = T, y = vel, group = interaction(ID, P), color = H2O)) + labs(x = 'T (Celcius)', y = 'Velocity (cm/yr)') + scale_color_viridis_c(option = 'D') + theme_classic(base_size = 14)
-        p3 <- vals$v.stokes %>% filter(ID %in% vals$data$ID[vals$data$toggle == TRUE]) %>% ggplot() + geom_point(aes(x = P, y = vel), alpha = 0.2) + geom_line(aes(x = P, y = vel, group = interaction(ID, T), color = H2O)) + labs(x = 'Pressure (kbar)', y = 'Velocity (cm/yr)') + scale_color_viridis_c(option = 'D') + theme_classic(base_size = 14)
+        p1 <- vals$v.stokes %>% filter(ID %in% vals$data$ID[vals$data$toggle == TRUE]) %>% ggplot() + geom_boxplot(aes(x = vel, y = ID, fill = H2O)) + labs(x = 'Velocity (cm/yr))', y = NULL, fill = 'H2O wt%') + scale_fill_viridis_c(option = 'D') + theme_classic(base_size = 14)
+        p2 <- vals$v.stokes %>% filter(ID %in% vals$data$ID[vals$data$toggle == TRUE]) %>% ggplot() + geom_point(aes(x = T, y = vel), alpha = 0.2) + geom_line(aes(x = T, y = vel, group = interaction(ID, P), color = P)) + labs(x = 'T (Celcius)', y = 'Velocity (cm/yr)', color = 'kbar') + scale_color_viridis_c(option = 'D') + theme_classic(base_size = 14)
+        p3 <- vals$v.stokes %>% filter(ID %in% vals$data$ID[vals$data$toggle == TRUE]) %>% ggplot() + geom_point(aes(x = P, y = vel), alpha = 0.2) + geom_line(aes(x = P, y = vel, group = interaction(ID, T), color = T)) + labs(x = 'Pressure (kbar)', y = 'Velocity (cm/yr)', color = 'Celcius') + scale_color_viridis_c(option = 'D') + theme_classic(base_size = 14)
         p <- p1 + p2 + p3
         return(p)
     })
