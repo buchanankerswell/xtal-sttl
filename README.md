@@ -9,6 +9,10 @@
 
 3. Approximate settling velocity using Stokes' equation
 
+The app can be run locally by cloning this repository `git clone https://github.com/buchanankerswell/xtal-sttl` and running `app.R`.
+
+Alternatively, the app can be [run from a web browser]().
+
 ## Calculating Fluid Densities
 
 The program uses a spreadsheet interface to input fluid compositions, including water content. Just copy and paste data from another spreadsheet or `.tsv`. Toggle measurements on/off by clicking the `toggle all` button, or selecting the toggle cells and hitting `return`.
@@ -33,7 +37,7 @@ Note: *Toggle samples on/off and adjust the temperature range from the `Magma De
 
 ## Calculating Stokes Velocity
 
-Switch to the `Stokes Velocity` tab and click `Calculate Velocity`. The results and visualizations with automatically generate.
+Switch to the `Stokes Velocity` tab and click `Calculate Velocity`. The results and visualizations will generate.
 
 ![](assets/images/demo-calc-velocity.gif)
 
