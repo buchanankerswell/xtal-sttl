@@ -19,8 +19,6 @@ Note: *The program works best with < 50 compositions, otherwise the visualizatio
 
 ![](assets/images/demo-table.gif)
 
-### Calculate
-
 Click the calculate button. The results are displayed in the results table and a series of plots are used to visualize the output.
 
 ![](assets/images/demo-density.gif)
