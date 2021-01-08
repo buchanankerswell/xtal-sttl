@@ -23,6 +23,6 @@ Note: *The program works best with < 50 compositions, otherwise the visualizatio
 
 Click the calculate button. The results are displayed in the results table and a series of plots are used to visualize the output.
 
-![](assets/images/demo-table.gif)
+![](assets/images/demo-density.gif)
 
 ## Calculating Fluid Viscosities
