@@ -23,7 +23,7 @@ The program uses a spreadsheet interface to input fluid compositions, including 
 
 Note: *The program works best with < 50 compositions, otherwise the visualizations become unreadable. A sample dataset can be found [here](https://github.com/buchanankerswell/xtal-sttl/tree/main/app/data)*
 
-Click the `Calculate Density` button.
+Input compositions and click the `Calculate Density` button.
 
 ![](assets/images/demo-calc-density.gif)
 
@@ -47,6 +47,10 @@ Switch to the `Stokes Velocity` tab and click `Calculate Velocity`.
 
 ## Saving Plots
 
-Plots can be saved from the `Options` tab as `.pdf`s.
+Plots can be saved from the `Options` tab in `.pdf` format.
 
 ![](assets/images/demo-save-plots.gif)
+
+## Igneous Petrology Lab Exercise
+
+[This exercise](https://buchanankerswell.github.io/xtal-sttl/tree/main/exercise.Rmd) was written based on the `xtal-sttl` app.

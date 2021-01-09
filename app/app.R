@@ -235,7 +235,7 @@ server <- function(input, output, session) {
     })
     # Stokes plots
     p3 <- reactive({
-        p1 <- vals$v.stokes %>% filter(ID %in% vals$data$ID[vals$data$toggle == TRUE]) %>% ggplot() + geom_boxplot(aes(x = vel, y = ID, fill = H2O)) + labs(x = 'Velocity (cm/yr))', y = NULL, fill = 'H2O wt%') + theme_classic(base_size = 14)
+        p1 <- vals$v.stokes %>% filter(ID %in% vals$data$ID[vals$data$toggle == TRUE]) %>% ggplot() + geom_boxplot(aes(x = vel, y = ID, fill = H2O)) + labs(x = 'Velocity (cm/yr)', y = NULL, fill = 'H2O wt%') + theme_classic(base_size = 14)
         p2 <- vals$v.stokes %>% filter(ID %in% vals$data$ID[vals$data$toggle == TRUE]) %>% ggplot() + geom_point(aes(x = T, y = vel), alpha = 0.2) + geom_line(aes(x = T, y = vel, group = interaction(ID, P), color = P)) + labs(x = 'T (Celcius)', y = 'Velocity (cm/yr)', color = 'kbar') + scale_color_viridis_c(option = 'D') + theme_classic(base_size = 14)
         p3 <- vals$v.stokes %>% filter(ID %in% vals$data$ID[vals$data$toggle == TRUE]) %>% ggplot() + geom_point(aes(x = P, y = vel), alpha = 0.2) + geom_line(aes(x = P, y = vel, group = interaction(ID, T), color = T)) + labs(x = 'Pressure (kbar)', y = 'Velocity (cm/yr)', color = 'Celcius') + scale_color_viridis_c(option = 'B') + theme_classic(base_size = 14)
         p <- p1 + p2 + p3
