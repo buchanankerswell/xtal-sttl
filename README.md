@@ -17,6 +17,10 @@ Note: *Use `command +/-` to resize app in your web browser*
 
 Alternatively, the app can be run locally by cloning this repository `git clone https://github.com/buchanankerswell/xtal-sttl` and running `app.R`.
 
+## Igneous Petrology Lab Exercise
+
+[This exercise](https://rpubs.com/buchanankerswell/711294) was written based on the `xtal-sttl` app.
+
 ## Calculating Fluid Densities
 
 The program uses a spreadsheet interface to input fluid compositions, including water content. Just copy and paste data from another spreadsheet or `.tsv`. Toggle measurements on/off by clicking the `toggle all` button, or selecting the toggle cells and hitting `return`.
@@ -50,7 +54,3 @@ Switch to the `Stokes Velocity` tab and click `Calculate Velocity`.
 Plots can be saved from the `Options` tab in `.pdf` format.
 
 ![](assets/images/demo-save-plots.gif)
-
-## Igneous Petrology Lab Exercise
-
-[This exercise](https://rpubs.com/buchanankerswell/711294) was written based on the `xtal-sttl` app.
