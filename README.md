@@ -53,4 +53,4 @@ Plots can be saved from the `Options` tab in `.pdf` format.
 
 ## Igneous Petrology Lab Exercise
 
-[This exercise](https://buchanankerswell.github.io/xtal-sttl/tree/main/exercise.Rmd) was written based on the `xtal-sttl` app.
+[This exercise](https://rpubs.com/buchanankerswell/711294) was written based on the `xtal-sttl` app.
