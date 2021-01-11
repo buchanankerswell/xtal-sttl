@@ -1,22 +1,19 @@
 ---
-title: 'Crystal Settling in Silicate Melts'
+title: 'Lab 1 | Crystal Settling in Silicate Melts'
 author:
 - Buchanan Kerswell^[Boise State University, buchanankerswell@u.boisestate.edu]
 - Matthew Kohn^[Boise State University, mattkohn@boisestate.edu]
 date: "`r format(Sys.time(), '%d %B %Y')`"
 output: 
-  # word_document:
-  #   toc: yes
-  #   fig_caption: yes
-  # pdf_document:
-  #   toc: yes
-  #   fig_caption: yes
-  html_document:
+  pdf_document:
     toc: yes
-    code_folding: hide
     fig_caption: yes
+  # html_document:
+  #   toc: yes
+  #   code_folding: hide
+  #   fig_caption: yes
 subtitle: 'Quantitative Analysis using `xtal-sttl`'
-abstract: Crystals may sink (or float) out of suspension as silicate melts (magma) intrude the crust and cool.  This process chemically differentiates magma and may form sheet-like layers of accumulated crystals, called "cumulate" rocks, which can have high economic value. To better understand this process, we will use the app `xtal-sttl` to calculate a crystal's settling velocity under a range of physical conditions. We will quantitatively explore how temperature, pressure, and melt composition affect the settling velocity of crystals.
+abstract: Crystals may sink (or float) out of suspension as silicate melts (magma) intrude the crust and cool. This process chemically differentiates magma and may form sheet-like layers of accumulated crystals, called "cumulate" rocks, which can have high economic value. To better understand this process, we will use the app `xtal-sttl` to calculate a crystal's settling velocity under a range of physical conditions. We will quantitatively explore how temperature, pressure, and melt composition affect the settling velocity of crystals.
 bibliography: ref.bib
 csl: apa.csl
 css: style.css
@@ -36,62 +33,98 @@ Cooling intrusions chemically differentiate in two ways:
   1. More Fe- and Mg-rich (mafic) minerals crystallize first, driving the residual melt composition to lower FeO and MgO, and higher SiO$_2$ [more felsic\; @bowen1956]
   2. Crystals may sink (or float) out of suspension, physically separating higher density (mafic) minerals from lower density (felsic) minerals (Figures 1 & 2)
 
+
 <center>
 
 
-![Figure 1. A cartoon illustrating the formation of cumulate rocks by settling of crystals out of suspension in a vertical intrusive body. From Alex Strekeisen: http://www.alexstrekeisen.it/english/pluto/cumulate.php.](figs/intrusion-cartoon.png){width='50%'}
+![A cartoon illustrating the formation of cumulate rocks by settling of crystals out of suspension in a vertical intrusive body. From Alex Strekeisen: http://www.alexstrekeisen.it/english/pluto/cumulate.php.](figs/intrusion-cartoon.png){width='40%'}
 
 
 </center>
+
+
+As we will see, temperature and magma composition affect magma viscosity. Magma viscosity affects Stokes settling velocity. These feedbacks result in a dynamic system that is constantly changing with time. [A video of this process](https://github.com/buchanankerswell/xtal-sttl/tree/main/assets/images) can be found at `https://github.com/buchanankerswell/xtal-sttl/` > `assets` > `images` > `kcl_sinking1.mp4`. Notice how the velocity of the settling KCl crystals change as more crystals form.
+
+In this lab we will calculate the Stokes settling velocity of crystals in a magma of known composition. We will then use several magma compositions from an available dataset to explore the effects of temperature, pressure, and composition on magma density, viscosity, and Stokes velocity of sinking crystals.
+
+
 <center>
 
 
-![Figure 2. These rocks appear to be sedimentary, but are actually alternating layers of dark and light minerals that settled out of suspension in a horizontal intrusive body (sill). These rocks form the famous economic deposits of platinum-group elements in Bushveld, South Africa. Photo by Jackie Guantlett.](figs/bushveld.jpg){width='80%'}
+![These rocks appear to be sedimentary, but are actually alternating layers of dark and light minerals that settled out of suspension in a horizontal intrusive body (sill). These rocks form the famous economic deposits of platinum-group elements in Bushveld, South Africa. Photo by Jackie Guantlett.](figs/bushveld.jpg){width='80%'}
 
 
 </center>
+
+
+# Exercise
+
+## Magma Density
+
+Magma density is a function of the magma composition, and the T-P-dependent volume change of the magma. This calculation is tedious by hand, so we will do this using `xtal-sttl`.
+
+## Magma viscosity
+
+@hess1996 regressed an empirical model for the viscosity of felsic magmas, which has the form:
+
+$$ln_\eta = [a_1 + a_2~ln(H_2O_{wt~\%})] + \frac{[b_1 + b_2~ln(H_2O_{wt~\%})]}{T - [c_1 + c_2~ln(H_2O_{wt~\%})]}$$
+
+where $a_1$, $a_2$, $b_1$, $b_2$, $c_1$, and $c_2$ are constants given in Table 1, $T$ is temperature in Kelvin, and $H_2O_{wt~\%}$ is the water content of the magma.
+
+| $a_1$ | $a_2$ | $b_1$ | $b_2$ | $c_1$ | $c_2$ |
+| ----- | ----- | ----- | ----- | ----- | ----- |
+| -3.54 | 0.83  | 9601  | -2366 | 196   | 32    |
+
+Table: Constants for VFT model [@hess1996]
 
 ## Stokes' Equation
 
-Cumulate rock formation can be modelled using a simple solution of Stokes' Equation:
+The settling velocity of crystals suspended in a fluid can be modelled using a simple solution of Stokes' Equation:
 
 $$v = \frac{2~g~r_{crystal}^2 (\rho_{crystal} - \rho_{melt})}{9 \eta}$$
 
 where $v$ is terminal settling velocity, $g$ is gravitational acceleration, $r$ is radius, $\rho$ is density, and $\eta$ is viscosity.
 
-# Exercise
+## Assumptions
+
+Lets consider a 300-meter-thick sill that is cooling and forming spherical olivine crystals with densities of 3450 kgm$^{-3}$, and radii of 0.5 mm. The composition of the melt is given in Table 2, and intruded the crust at 1180 $^\circ$C at a depth of 4 km below the surface (~ 1000 bars).
+
+|   ID   | SiO$_2$ | TiO$_2$ | Al$_2$O$_3$ | Fe$_2$O$_3$ |  FeO  |  MgO  |  CaO  | Na$_2$O | K$_2$O | H$_2$O |
+| ------ | ------- | ------- | ----------- | ----------- | ----- | ----- | ----- | ------- | ------ | ------ |
+| chsmelt | 47.96   | 1.69    | 16.88       | 0           | 11.65 | 7.98  | 10.44 | 2.59    | 0.39   | 0.24   |
+
+Table: Magma Composition for sample chsmelt
+
+## Running `xtal-settl`
 
 The `xtal-sttl` app will run in your web browser. You can use this [link](https://kerswell.shinyapps.io/xtal-sttl), or navigate to `kerswell.shinyapps.io/xtal-sttl`. A short [users' guide](https://github.com/buchanankerswell/xtal-sttl) can be found at `github.com/buchanankerswell/xtal-sttl`.
 
-## Assumptions
-
-Lets consider a 300-meter-thick sill that is cooling and forming spherical olivine crystals with densities of 3450 kgm$^{-3}$, and radii of 0.5 mm. The composition of the melt is given in Table 1, and intruded the crust at 1180 $^\circ$C at a depth of 4 km below the surface (~ 1000 bars).
-
-```{r table}
-tibble(ID = 'cheesemelt', SiO2 = 47.96, TiO2 = 1.69, Al2O3 = 16.88, FeO = 11.65, MnO = 0.18, MgO = 7.98, CaO = 10.44, Na2O = 2.59, K2O = 0.39, H2O = 0.24) %>% kable(caption = 'Table 1. Melt composition')
-# %>% kable_minimal()
-```
+\newpage
 
 ## Questions
 
-Given this information, use the app `xtal-sttl` to answer the following questions:
+Given the equations, composition, and assumptions above, please do the following:
 
-### Olivine crystals
-1. Would olivine crystals sink or float in this magma?
-2. What is the Stokes velocity of olivine crystals in m/s?
-3. Convert the velocity into units that make more sense, which are not extremely large or small
-4. How long would it take an olivine crystal to traverse the entire thickness of the sill?
+### Magma density & viscosity
+1. Use the app `xtal-sttl` to calculate the density of chsmelt
+2. Calculate (by hand) the viscosity of chsmelt
 
-### Plagioclase crystals
+### Olivine crystal velocity
+3. What is the Stokes velocity of olivine crystals suspended in chsmelt in m/s?
+4. Would olivine crystals sink or float in chsmelt?
+5. Convert the velocity into units that make more sense, which are not extremely large or small
+6. How long would it take an olivine crystal to traverse the entire thickness of the sill?
+
+### Plagioclase crystal velocity
 Do the same calculation assuming plagioclase is crystallizing in suspension. Assume the plagioclase crystals have radii of 0.5 mm and densities of 2730 kgm$^{-3}$.
 
-5. Would plagioclase crystals sink or float in this magma?
-6. What is the Stokes velocity of plagioclase crystals (in appropriate units)?
-7. How long would these plagioclase crystals take to traverse the entire thickness of the sill?
+7. Would plagioclase crystals sink or float in this magma?
+8. What is the Stokes velocity of plagioclase crystals (in appropriate units)?
+9. How long would these plagioclase crystals take to traverse the entire thickness of the sill?
 
 ### Discussion question
 
-Copy and paste a handful (5-10) of samples from the [dataset](https://github.com/buchanankerswell/xtal-sttl/blame/main/app/data/test-data-hydr.tsv) found at `github.com/buchanankerswell/xtal-sttl/blame/main/app/data/test-data-hydr.tsv`. Select whichever samples you want, but I suggest selecting a variation of compositions.
+Copy and paste a handful (5-10) of samples from the [dataset](github.com/buchanankerswell/xtal-sttl/blame/main/app/data/test-data-hydr.tsv) found at `github.com/buchanankerswell/xtal-sttl/` > `app` > `data` > `test-data-hydr.tsv`. Select whichever samples you want, but I suggest selecting samples with SiO$_2$ > 60 to be consistent with the @hess1996 model, which only considered felsic magmas.
 
 In your own words (3-5 sentences), describe how temperature, pressure, and melt composition (especially SiO2 and H2O) affect the density, viscosity, and settling velocity of crystals in silicate melts.
 
