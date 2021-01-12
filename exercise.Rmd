@@ -5,13 +5,13 @@ author:
 - Matthew Kohn^[Boise State University, mattkohn@boisestate.edu]
 date: "`r format(Sys.time(), '%d %B %Y')`"
 output:
-  pdf_document:
-    toc: yes
-    fig_caption: yes
-  # html_document:
+  # pdf_document:
   #   toc: yes
-  #   code_folding: hide
   #   fig_caption: yes
+  html_document:
+    toc: yes
+    code_folding: hide
+    fig_caption: yes
 subtitle: 'Quantitative Analysis using `xtal-sttl`'
 abstract: Crystals may sink (or float) out of suspension as silicate melts (magma) intrude the crust and cool. This process chemically differentiates magma and may form sheet-like layers of accumulated crystals, called "cumulate" rocks, which can have high economic value. To better understand this process, we will use the app `xtal-sttl` to calculate a crystal's settling velocity under a range of physical conditions. We will quantitatively explore how temperature, pressure, and melt composition affect the settling velocity of crystals.
 bibliography: ref.bib
@@ -37,7 +37,7 @@ Cooling intrusions chemically differentiate in two ways:
 <center>
 
 
-![A cartoon illustrating the formation of cumulate rocks by settling of crystals out of suspension in a vertical intrusive body. From Alex Strekeisen: http://www.alexstrekeisen.it/english/pluto/cumulate.php.](figs/intrusion-cartoon.png){width='40%'}
+![Figure 1. A cartoon illustrating the formation of cumulate rocks by settling of crystals out of suspension in a vertical intrusive body. From Alex Strekeisen: http://www.alexstrekeisen.it/english/pluto/cumulate.php.](figs/intrusion-cartoon.png){width='40%'}
 
 
 </center>
@@ -51,7 +51,7 @@ In this lab we will calculate the Stokes settling velocity of crystals in a magm
 <center>
 
 
-![These rocks appear to be sedimentary, but are actually alternating layers of dark and light minerals that settled out of suspension in a horizontal intrusive body (sill). These rocks form the famous economic deposits of platinum-group elements in Bushveld, South Africa. Photo by Jackie Guantlett.](figs/bushveld.jpg){width='80%'}
+![Figure 2. These rocks appear to be sedimentary, but are actually alternating layers of dark and light minerals that settled out of suspension in a horizontal intrusive body (sill). These rocks form the famous economic deposits of platinum-group elements in Bushveld, South Africa. Photo by Jackie Guantlett.](figs/bushveld.jpg){width='80%'}
 
 
 </center>
@@ -75,7 +75,7 @@ where $a_1$, $a_2$, $b_1$, $b_2$, $c_1$, and $c_2$ are constants given in Table 
 | ----- | ----- | ----- | ----- | ----- | ----- |
 | -3.54 | 0.83  | 9601  | -2366 | 196   | 32    |
 
-Table: Constants for VFT model [@hess1996]
+Table: Table 1. Constants for VFT model [@hess1996]
 
 ## Stokes' Equation
 
@@ -93,7 +93,7 @@ Lets consider a 300-meter-thick sill that is cooling and forming spherical olivi
 | ------ | ------- | ------- | ----------- | ----------- | ----- | ----- | ----- | ------- | ------ | ------ |
 | chsmelt | 47.96   | 1.69    | 16.88       | 0           | 11.65 | 7.98  | 10.44 | 2.59    | 0.39   | 0.24   |
 
-Table: Magma Composition for sample chsmelt
+Table: Table 2. Magma Composition for sample chsmelt
 
 ## Running `xtal-settl`
 
@@ -124,7 +124,7 @@ Do the same calculation assuming plagioclase is crystallizing in suspension. Ass
 
 ### Discussion question
 
-Copy and paste a handful (5-10) of samples from the [dataset](github.com/buchanankerswell/xtal-sttl/blame/main/app/data/test-data-hydr.tsv) found at `github.com/buchanankerswell/xtal-sttl/` > `app` > `data` > `test-data-hydr.tsv`. Select whichever samples you want, but I suggest selecting samples with SiO$_2$ > 60 to be consistent with the @hess1996 model, which only considered felsic magmas.
+Copy and paste a handful (5-10) of samples from the [dataset](https://github.com/buchanankerswell/xtal-sttl/tree/main/app/data) found at `github.com/buchanankerswell/xtal-sttl/` > `app` > `data` > `test-data-hydr.tsv`. Select whichever samples you want, but I suggest selecting samples with SiO$_2$ > 60 to be consistent with the @hess1996 model, which only considered felsic magmas.
 
 In your own words (3-5 sentences), describe how temperature, pressure, and melt composition (especially SiO2 and H2O) affect the density, viscosity, and settling velocity of crystals in silicate melts.
 
