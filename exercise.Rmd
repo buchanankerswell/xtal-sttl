@@ -67,7 +67,7 @@ Magma density is a function of the magma composition, and the T-P-dependent volu
 
 @hess1996 regressed an empirical model for the viscosity of felsic magmas, which has the form:
 
-$$ln_\eta = [a_1 + a_2~ln(H_2O_{wt~\%})] + \frac{[b_1 + b_2~ln(H_2O_{wt~\%})]}{T - [c_1 + c_2~ln(H_2O_{wt~\%})]}$$
+$$ln(\eta) = [a_1 + a_2~ln(H_2O_{wt~\%})] + \frac{[b_1 + b_2~ln(H_2O_{wt~\%})]}{T - [c_1 + c_2~ln(H_2O_{wt~\%})]}$$
 
 where $a_1$, $a_2$, $b_1$, $b_2$, $c_1$, and $c_2$ are constants given in Table 1, $T$ is temperature in Kelvin, and $H_2O_{wt~\%}$ is the water content of the magma.
 
