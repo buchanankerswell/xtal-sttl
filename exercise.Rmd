@@ -4,7 +4,7 @@ author:
 - Buchanan Kerswell^[Boise State University, buchanankerswell@u.boisestate.edu]
 - Matthew Kohn^[Boise State University, mattkohn@boisestate.edu]
 date: "`r format(Sys.time(), '%d %B %Y')`"
-output: 
+output:
   pdf_document:
     toc: yes
     fig_caption: yes

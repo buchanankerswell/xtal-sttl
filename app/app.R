@@ -87,7 +87,7 @@ server <- function(input, output, session) {
     })
     # Converts data table into R object
     observe({
-        if (!is.null(input$table)) {vals$data <- hot_to_r(input$table)} 
+        if (!is.null(input$table)) {vals$data <- hot_to_r(input$table)}
     })
     # Handle toggle input
     observeEvent(input$toggle, {
@@ -126,8 +126,6 @@ server <- function(input, output, session) {
                               ID = d$ID)
             }) %>% group_by(ID) %>% arrange(ID, T, P)
         })
-        i <<- vals$data
-        j <<- vals$dens
     })
     # Results table
     output$table2 <- renderRHandsontable({
@@ -184,7 +182,6 @@ server <- function(input, output, session) {
         vals$log.n <- vals$dens %>%
             mutate(n.melt = (a1 + a2*log(ifelse(H2O == 0, 1e-15, H2O))) + ((b1 + b2*log(ifelse(H2O == 0, 1e-15, H2O))) / ((T + 273.15) - (c1 + c2*log(ifelse(H2O == 0, 1e-15, H2O))))),
                    n.mush = n.melt * (1 - (input$phi/phi0))^(-5/2))
-        k <<- vals$log.n
     })
     # Density results table
     output$table3 <- renderRHandsontable({
