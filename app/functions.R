@@ -29,8 +29,8 @@ body <-
                     solidHeader = TRUE,
                     numericInput('Tlow1', 'T Range (Celcius)', value = 800, min = 0, max = 2000, step = 25),
                     numericInput('Thigh1', NULL, value = 1500, min = 0, max = 2000, step = 25),
-                    numericInput('Plow1', 'P Range (bar)', value = 1000, min = 0, max = 20000, step = 100),
-                    numericInput('Phigh1', NULL, value = 10000, min = 0, max = 20000, step = 100),
+                    numericInput('Plow1', 'P Range (kbar)', value = 1, min = 0, max = 20, step = 0.25),
+                    numericInput('Phigh1', NULL, value = 1, min = 0, max = 20, step = 0.25),
                     # Select plot
                     selectInput('type1', label = 'Plot Type', choices = c('Summary', 'Summary Density', 'Density T', 'Density P'), selected = 'Summary'),
                     # Calculate density button
@@ -44,6 +44,7 @@ body <-
                 # Results Box
                 box(width = 5,
                     title = 'Density Results',
+                    footer = 'rho = density = kg/m^3, P = kbar, T = ˚C',
                     status = 'primary',
                     solidHeader = TRUE,
                     # Results Table
@@ -79,6 +80,7 @@ body <-
                 # Results Box
                 box(width = 10,
                   title = 'Viscosity Results',
+                  footer = 'rho = density = kg/m^3, log.n = log(viscosity) = log([Pa*s]), P = kbar, T = ˚C',
                   status = 'primary',
                   solidHeader = TRUE,
                   # Results Table
@@ -90,6 +92,7 @@ body <-
                 # Plot box
                 box(width = 12,
                     title = 'Visualization',
+                    footer = 'rho = density = kg/m^3, log.n = log(viscosity) = log([Pa*s]), vel = velocity = m/yr, P = kbar, T = ˚C',
                     status = 'primary',
                     solidHeader = TRUE,
                     plotOutput(outputId = 'p3')),
@@ -108,7 +111,7 @@ body <-
                     # Crystal Parameters
                     'Crystal Parameters',
                     br(),
-                    numericInput('rad', 'Radius (m)', value = 0.001, min = 0, max = 0.1, step = 0.0001),
+                    numericInput('rad', 'Radius (mm)', value = 0.1, min = 0, max = 100, step = 0.1),
                     numericInput('rho', 'Density (kg/m^3)', value = 3000, min = 1000, max = 5000, step = 25),
                     # Calculate viscosity button
                     actionButton('calc3', 'Calculate Velocity')))),
@@ -155,6 +158,7 @@ body <-
                   verbatimTextOutput('acknowledgements'))))))
 # Magma density function
 magma_density <- function(SiO2, TiO2, Al2O3, Fe2O3, FeO, MgO, CaO, Na2O, K2O, H2O, P, T, IDs = NULL){
+  P <- P*1000
   # Save inputs & tidy
   d <- tibble(
     SiO2 = SiO2,
@@ -429,6 +433,6 @@ magma_density <- function(SiO2, TiO2, Al2O3, Fe2O3, FeO, MgO, CaO, Na2O, K2O, H2
                 H2O = d.norm$norm.H2O*100,
                 T = T,
                 P = P/1000,
-                rho.melt = d.rho.liq,
-                sig.rho = d.sig.rho))
+                rho.melt = d.rho.liq*1000,
+                sig.rho = d.sig.rho*1000))
 }

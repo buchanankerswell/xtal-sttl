@@ -61,8 +61,8 @@ server <- function(input, output, session) {
                          P = rep(NA_real_, 14),
                          rho.melt = rep(NA_real_, 14),
                          sig.rho = rep(NA_real_, 14),
-                         n.melt = rep(NA_real_, 14),
-                         n.mush = rep(NA_real_, 14))
+                         log.n.melt = rep(NA_real_, 14),
+                         log.n.mush = rep(NA_real_, 14))
     vals$v.stokes <- tibble(ID = rep(NA_character_, 15),
                             SiO2 = rep(NA_real_, 15),
                             H2O = rep(NA_real_, 15),
@@ -70,8 +70,8 @@ server <- function(input, output, session) {
                             P = rep(NA_real_, 15),
                             rho.xtal = rep(NA_real_, 15),
                             sig.rho = rep(NA_real_, 15),
-                            n.melt = rep(NA_real_, 15),
-                            n.mush = rep(NA_real_, 15),
+                            log.n.melt = rep(NA_real_, 15),
+                            log.n.mush = rep(NA_real_, 15),
                             rho.melt = rep(NA_real_, 15),
                             vel = rep(NA_real_, 15))
     vals$x1 <- NULL
@@ -180,8 +180,8 @@ server <- function(input, output, session) {
         phi0 <- 0.6
         # Modify using xtal fraction -> n_magma = n_melt * (1 - (phi/phi0))^(-5/2)
         vals$log.n <- vals$dens %>%
-            mutate(n.melt = (a1 + a2*log(ifelse(H2O == 0, 1e-15, H2O))) + ((b1 + b2*log(ifelse(H2O == 0, 1e-15, H2O))) / ((T + 273.15) - (c1 + c2*log(ifelse(H2O == 0, 1e-15, H2O))))),
-                   n.mush = n.melt * (1 - (input$phi/phi0))^(-5/2))
+            mutate(log.n.melt = (a1 + a2*log(ifelse(H2O == 0, 1e-15, H2O))) + ((b1 + b2*log(ifelse(H2O == 0, 1e-15, H2O))) / ((T + 273.15) - (c1 + c2*log(ifelse(H2O == 0, 1e-15, H2O))))),
+                   log.n.mush = log.n.melt * (1 - (input$phi/phi0))^(-5/2))
     })
     # Density results table
     output$table3 <- renderRHandsontable({
@@ -198,13 +198,13 @@ server <- function(input, output, session) {
     # Viscosity plots
     p2 <- reactive({
         if(input$type2 == 'Summary'){
-            p1 <- vals$log.n %>% filter(ID %in% vals$data$ID[vals$data$toggle == TRUE]) %>% ggplot() + geom_histogram(aes(x = n.melt)) + labs(x = 'Log Viscosity Melt (Pa s)', y = NULL) + theme_classic(base_size = 14)
-            p2 <- vals$log.n %>% filter(ID %in% vals$data$ID[vals$data$toggle == TRUE]) %>% ggplot() + geom_histogram(aes(x = n.mush)) + labs(x = 'Log Viscosity Mush (Pa s)', y = NULL) + theme_classic(base_size = 14)
+            p1 <- vals$log.n %>% filter(ID %in% vals$data$ID[vals$data$toggle == TRUE]) %>% ggplot() + geom_histogram(aes(x = log.n.melt)) + labs(x = 'Log Viscosity Melt (Pa s)', y = NULL) + theme_classic(base_size = 14)
+            p2 <- vals$log.n %>% filter(ID %in% vals$data$ID[vals$data$toggle == TRUE]) %>% ggplot() + geom_histogram(aes(x = log.n.mush)) + labs(x = 'Log Viscosity Mush (Pa s)', y = NULL) + theme_classic(base_size = 14)
             p <- p1 + p2
         } else if(input$type2 == 'Viscosity T'){
-            p <- vals$log.n %>% filter(ID %in% vals$data$ID[vals$data$toggle == TRUE]) %>% ggplot() + geom_point(aes(x = T, y = n.melt), alpha = 0.2) + geom_line(aes(x = T, y = n.melt, color = H2O, group = H2O), size = 0.8) + labs(x = 'T (Celcius)', y = 'Log Viscosity Melt (Pa s)', color = 'H2O wt%') + theme_classic(base_size = 14)
+            p <- vals$log.n %>% filter(ID %in% vals$data$ID[vals$data$toggle == TRUE]) %>% ggplot() + geom_point(aes(x = T, y = log.n.melt), alpha = 0.2) + geom_line(aes(x = T, y = log.n.melt, color = H2O, group = H2O), size = 0.8) + labs(x = 'T (Celcius)', y = 'Log Viscosity Melt (Pa s)', color = 'H2O wt%') + theme_classic(base_size = 14)
         } else if(input$type2 == 'Viscosity H2O'){
-            p <- vals$log.n %>% filter(ID %in% vals$data$ID[vals$data$toggle == TRUE]) %>% ggplot() + geom_point(aes(x = H2O, y = n.melt), alpha = 0.2) + geom_line(aes(x = H2O, y = n.melt, color = T, group = T), size = 0.8) + labs(x = 'H2O (wt%)', y = 'Log Viscosity Melt (Pa s)', color = 'Celcius') + scale_color_viridis_c(option = 'B') + theme_classic(base_size = 14)
+            p <- vals$log.n %>% filter(ID %in% vals$data$ID[vals$data$toggle == TRUE]) %>% ggplot() + geom_point(aes(x = H2O, y = log.n.melt), alpha = 0.2) + geom_line(aes(x = H2O, y = log.n.melt, color = T, group = T), size = 0.8) + labs(x = 'H2O (wt%)', y = 'Log Viscosity Melt (Pa s)', color = 'Celcius') + scale_color_viridis_c(option = 'B') + theme_classic(base_size = 14)
         }
         return(p)
     })
@@ -220,9 +220,8 @@ server <- function(input, output, session) {
         # Constants
         g <- 9.81
         vals$v.stokes <- vals$log.n %>%
-            mutate(rho.xtal = input$rho/1000,
-                   vel = ((2 * g * input$rad^2 * (input$rho - rho.melt * 1000)) / (9 * n.melt * 10)) / 1e2 * 3.154e7)
-        l <<- vals$v.stokes
+            mutate(rho.xtal = input$rho,
+                   vel = ((2 * g * (input$rad/1e3)^2 * (input$rho - rho.melt)) / (9 * exp(log.n.melt))) * 3.154e7)
     })
     # Results table
     output$table5 <- renderRHandsontable({
@@ -232,9 +231,9 @@ server <- function(input, output, session) {
     })
     # Stokes plots
     p3 <- reactive({
-        p1 <- vals$v.stokes %>% filter(ID %in% vals$data$ID[vals$data$toggle == TRUE]) %>% ggplot() + geom_boxplot(aes(x = vel, y = ID, fill = H2O)) + labs(x = 'Velocity (cm/yr)', y = NULL, fill = 'H2O wt%') + theme_classic(base_size = 14)
-        p2 <- vals$v.stokes %>% filter(ID %in% vals$data$ID[vals$data$toggle == TRUE]) %>% ggplot() + geom_point(aes(x = T, y = vel), alpha = 0.2) + geom_line(aes(x = T, y = vel, group = interaction(ID, P), color = P)) + labs(x = 'T (Celcius)', y = 'Velocity (cm/yr)', color = 'kbar') + scale_color_viridis_c(option = 'D') + theme_classic(base_size = 14)
-        p3 <- vals$v.stokes %>% filter(ID %in% vals$data$ID[vals$data$toggle == TRUE]) %>% ggplot() + geom_point(aes(x = P, y = vel), alpha = 0.2) + geom_line(aes(x = P, y = vel, group = interaction(ID, T), color = T)) + labs(x = 'Pressure (kbar)', y = 'Velocity (cm/yr)', color = 'Celcius') + scale_color_viridis_c(option = 'B') + theme_classic(base_size = 14)
+        p1 <- vals$v.stokes %>% filter(ID %in% vals$data$ID[vals$data$toggle == TRUE]) %>% ggplot() + geom_boxplot(aes(x = vel, y = ID, fill = H2O)) + labs(x = 'Velocity (m/yr)', y = NULL, fill = 'H2O wt%') + theme_classic(base_size = 14)
+        p2 <- vals$v.stokes %>% filter(ID %in% vals$data$ID[vals$data$toggle == TRUE]) %>% ggplot() + geom_point(aes(x = T, y = vel), alpha = 0.2) + geom_line(aes(x = T, y = vel, group = interaction(ID, P), color = P)) + labs(x = 'T (Celcius)', y = 'Velocity (m/yr)', color = 'kbar') + scale_color_viridis_c(option = 'D') + theme_classic(base_size = 14)
+        p3 <- vals$v.stokes %>% filter(ID %in% vals$data$ID[vals$data$toggle == TRUE]) %>% ggplot() + geom_point(aes(x = P, y = vel), alpha = 0.2) + geom_line(aes(x = P, y = vel, group = interaction(ID, T), color = T)) + labs(x = 'Pressure (kbar)', y = 'Velocity (m/yr)', color = 'Celcius') + scale_color_viridis_c(option = 'B') + theme_classic(base_size = 14)
         p <- p1 + p2 + p3
         return(p)
     })
